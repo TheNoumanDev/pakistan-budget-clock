@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.astro/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+
+# Local data/source PDFs (hosted on R2 CDN)
+data/sources/r2-upload/
+data/sources/ministry-of-finance/
+data/sources/provincial-budgets/
+data/sources/india-budget/
+data/sources/github-budgets/

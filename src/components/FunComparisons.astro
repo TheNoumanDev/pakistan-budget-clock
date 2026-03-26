@@ -1,0 +1,96 @@
+---
+interface Props {
+  lang?: 'en' | 'ur';
+}
+
+const { lang = 'en' } = Astro.props;
+
+import budgetData from '../../public/data/budget.json';
+
+const { perCapitaDebt, funComparisons } = budgetData;
+const population = budgetData.comparisonStats.population.value;
+---
+
+<section class="py-16 md:py-24 border-t border-white/5">
+  <div class="section-container">
+    <h2 class="text-sm uppercase tracking-[0.2em] text-gray-500 text-center mb-2">
+      {lang === 'ur' ? 'یہ اتنا بڑا ہے کہ...' : 'To put this in perspective...'}
+    </h2>
+    <p class="text-gray-600 text-center text-sm mb-12">
+      {lang === 'ur' ? 'قرض کے سود سے کیا خریدا جا سکتا ہے' : 'What debt interest could buy instead'}
+    </p>
+
+    <div class="max-w-5xl mx-auto">
+      <!-- Per Capita Debt - Hero stat -->
+      <div class="text-center mb-16 p-8 bg-dark-800 rounded-2xl border border-white/5">
+        <p class="text-xs uppercase tracking-wider text-gray-600 mb-3">
+          {lang === 'ur' ? perCapitaDebt.labelUrdu : perCapitaDebt.label}
+        </p>
+        <div class="text-4xl md:text-5xl lg:text-6xl font-bold font-mono text-debt-red glow-red mb-3">
+          Rs {perCapitaDebt.perCapitaPKR.toLocaleString('en-PK')}
+        </div>
+        <p class="text-gray-500 text-sm">
+          {lang === 'ur' ? 'ہر پاکستانی شہری پر' : 'owed by every Pakistani citizen'}
+        </p>
+        <p class="text-gray-700 text-sm mt-2">
+          ({lang === 'ur' ? 'کل قرض' : 'Total debt'}: Rs {(perCapitaDebt.totalNationalDebt / 1_000_000_000_000).toFixed(1)}T / {(population / 1_000_000)}M {lang === 'ur' ? 'آبادی' : 'population'})
+        </p>
+      </div>
+
+      <!-- Fun Stats Grid -->
+      <div class="grid md:grid-cols-3 gap-6 mb-12">
+        <!-- Per Minute -->
+        <div class="impact-card text-center">
+          <div class="text-3xl md:text-4xl font-bold font-mono text-yellow-400 mb-2">31</div>
+          <p class="text-white font-medium mb-1">iPhone 15 Pros</p>
+          <p class="text-gray-500 text-sm">{lang === 'ur' ? 'ہر منٹ خریدے جا سکتے ہیں' : 'could be bought every minute'}</p>
+        </div>
+
+        <!-- Per Hour -->
+        <div class="impact-card text-center">
+          <div class="text-3xl md:text-4xl font-bold font-mono text-blue-400 mb-2">144</div>
+          <p class="text-white font-medium mb-1">Toyota Corollas</p>
+          <p class="text-gray-500 text-sm">{lang === 'ur' ? 'ہر گھنٹے خریدی جا سکتی ہیں' : 'could be bought every hour'}</p>
+        </div>
+
+        <!-- Houses -->
+        <div class="impact-card text-center">
+          <div class="text-3xl md:text-4xl font-bold font-mono text-green-400 mb-2">312</div>
+          <p class="text-white font-medium mb-1">{lang === 'ur' ? 'گھر' : 'Houses'}</p>
+          <p class="text-gray-500 text-sm">{lang === 'ur' ? 'ہر گھنٹے بنائے جا سکتے ہیں' : 'could be built every hour'}</p>
+        </div>
+      </div>
+
+      <!-- Annual Impact -->
+      <div class="text-center mb-8">
+        <p class="text-xs uppercase tracking-wider text-gray-600 mb-6">
+          {lang === 'ur' ? 'ایک سال کے قرض کے سود سے' : "One year's debt interest could build"}
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <div>
+            <div class="text-2xl md:text-3xl font-bold font-mono text-education-green glow-green">82,070</div>
+            <p class="text-gray-400 text-sm mt-1">{lang === 'ur' ? 'پرائمری سکول' : 'primary schools'}</p>
+          </div>
+          <div>
+            <div class="text-2xl md:text-3xl font-bold font-mono text-health-teal glow-teal">16,414</div>
+            <p class="text-gray-400 text-sm mt-1">{lang === 'ur' ? 'دیہی ہسپتال' : 'rural hospitals'}</p>
+          </div>
+          <div>
+            <div class="text-2xl md:text-3xl font-bold font-mono text-purple-400">16.4M</div>
+            <p class="text-gray-400 text-sm mt-1">{lang === 'ur' ? 'یونیورسٹی وظائف' : 'university scholarships'}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dramatic statement -->
+      <div class="text-center mt-12 p-6 border border-debt-red/20 rounded-xl bg-debt-red/5">
+        <p class="text-lg md:text-xl text-gray-300">
+          {lang === 'ur'
+            ? 'قرض کا سود اتنا ہے کہ ہر پاکستانی بچے کو مفت تعلیم دی جا سکتی ہے — 6 بار!'
+            : 'Debt interest alone could provide free education to every Pakistani child — 6 times over!'}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

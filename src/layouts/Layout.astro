@@ -1,0 +1,61 @@
+---
+import FloatingNav from '../components/FloatingNav.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  lang?: 'en' | 'ur';
+  showFloatingNav?: boolean;
+}
+
+const {
+  title,
+  description = "Live tracker of Pakistan government spending per second",
+  lang = 'en',
+  showFloatingNav = true
+} = Astro.props;
+
+const dir = lang === 'ur' ? 'rtl' : 'ltr';
+---
+
+<!doctype html>
+<html lang={lang} dir={dir} class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content="Rs 260,000 in debt interest — every second" />
+    <meta property="og:image" content="/og-image.png" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content="Rs 260,000 in debt interest — every second" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet" />
+
+    <title>{title}</title>
+  </head>
+  <body class="bg-dark-950 text-white antialiased font-sans min-h-screen">
+    <slot />
+
+    {showFloatingNav && <FloatingNav lang={lang} />}
+
+    <!-- Chart.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  </body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>

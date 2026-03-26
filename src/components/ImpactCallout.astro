@@ -1,0 +1,47 @@
+---
+interface Props {
+  lang?: 'en' | 'ur';
+}
+
+const { lang = 'en' } = Astro.props;
+
+import en from '../i18n/en.json';
+import ur from '../i18n/ur.json';
+
+const t = lang === 'ur' ? ur : en;
+---
+
+<section class="py-16 md:py-24 border-t border-white/5">
+  <div class="section-container">
+    <div class="max-w-4xl mx-auto">
+      <!-- 25 Million Children -->
+      <div class="text-center mb-16">
+        <div class="text-5xl md:text-7xl font-bold font-mono text-debt-red glow-red mb-4">
+          {t.impact.childrenTitle}
+        </div>
+        <p class="text-xl md:text-2xl font-medium text-white mb-4">
+          {t.impact.childrenText}
+        </p>
+        <p class="text-gray-500 text-base mb-4">
+          {t.impact.costText}
+        </p>
+        <p class="text-lg text-education-green glow-green font-semibold">
+          {t.impact.debtComparison}
+        </p>
+      </div>
+
+      <!-- Divider -->
+      <div class="border-t border-white/5 my-12"></div>
+
+      <!-- Stunting Rate -->
+      <div class="text-center">
+        <div class="text-5xl md:text-7xl font-bold font-mono text-health-teal glow-teal mb-4">
+          {t.impact.stuntingTitle}
+        </div>
+        <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
+          {t.impact.stuntingText}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

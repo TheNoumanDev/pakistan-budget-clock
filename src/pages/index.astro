@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import TickerGrid from '../components/TickerGrid.astro';
+import TimeOnPage from '../components/TimeOnPage.astro';
+import FunComparisons from '../components/FunComparisons.astro';
+import BudgetChart from '../components/BudgetChart.astro';
+import ImpactCallout from '../components/ImpactCallout.astro';
+import HistoricalChart from '../components/HistoricalChart.astro';
+import ShareButtons from '../components/ShareButtons.astro';
+import Sources from '../components/Sources.astro';
+import Footer from '../components/Footer.astro';
+
+// Get language from URL query param
+const url = new URL(Astro.request.url);
+const lang = url.searchParams.get('lang') === 'ur' ? 'ur' : 'en';
+
+import en from '../i18n/en.json';
+import ur from '../i18n/ur.json';
+
+const t = lang === 'ur' ? ur : en;
+---
+
+<Layout title={t.meta.title} description={t.meta.description} lang={lang}>
+  <Navbar lang={lang} />
+  <main>
+    <Hero lang={lang} />
+    <TickerGrid lang={lang} />
+    <div id="while-reading">
+      <TimeOnPage lang={lang} />
+      <FunComparisons lang={lang} />
+    </div>
+    <div id="budget-chart">
+      <BudgetChart lang={lang} />
+    </div>
+    <div id="impact">
+      <ImpactCallout lang={lang} />
+    </div>
+    <div id="historical">
+      <HistoricalChart lang={lang} />
+    </div>
+    <div id="share">
+      <ShareButtons lang={lang} />
+      <Sources lang={lang} />
+    </div>
+  </main>
+  <Footer lang={lang} />
+</Layout>

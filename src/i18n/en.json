@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "Pakistan Budget Clock",
+    "description": "Live tracker of Pakistan government spending per second",
+    "ogTitle": "Pakistan Budget Clock",
+    "ogDescription": "Rs 260,000 in debt interest — every second"
+  },
+  "nav": {
+    "liveData": "Live Data",
+    "compare": "10-Year Compare",
+    "methodology": "Methodology",
+    "language": "اردو"
+  },
+  "hero": {
+    "eyebrow": "FY 2025–26 · Official Budget · Updated July 2025",
+    "title": "Where your tax money goes — every second",
+    "subtitle": "Based on Pakistan's official federal budget. Rs 17.57 trillion. All figures from Ministry of Finance."
+  },
+  "tickers": {
+    "sinceFiscalYear": "Since July 1, 2025",
+    "perSecond": "per second",
+    "ofBudget": "of federal budget",
+    "shareSnapshot": "Share Snapshot",
+    "resetNote": "Counters reset each July 1"
+  },
+  "timeOnPage": {
+    "title": "While you were reading...",
+    "timeOnPage": "Time on this page",
+    "seconds": "seconds",
+    "debtPaid": "Debt interest paid",
+    "equivalents": {
+      "title": "That could pay for",
+      "teachers": "government teachers for a month",
+      "oneMinute": "1 minute of debt interest",
+      "oneHour": "1 hour of debt interest",
+      "oneDay": "1 day of debt interest"
+    }
+  },
+  "chart": {
+    "title": "FY 2025-26 federal budget — where every rupee goes",
+    "subtitle": "Education and Health are so small they're barely visible"
+  },
+  "impact": {
+    "childrenTitle": "25,000,000",
+    "childrenText": "children are out of school in Pakistan",
+    "costText": "The cost to educate them all: Rs 375 billion per year",
+    "debtComparison": "Pakistan's debt interest covers that in just 17 days",
+    "stuntingTitle": "40%",
+    "stuntingText": "of Pakistani children under 5 are stunted due to chronic underfunding of health and nutrition"
+  },
+  "historical": {
+    "title": "A decade of debt — how the budget shifted",
+    "subtitle": "FY 2015-16 to FY 2025-26 (10 years)"
+  },
+  "share": {
+    "title": "Share this data",
+    "whatsapp": "Share on WhatsApp",
+    "twitter": "Share on X",
+    "copy": "Copy Link",
+    "copied": "Copied!"
+  },
+  "sources": {
+    "title": "Sources",
+    "text": "All figures from official Ministry of Finance budget documents.",
+    "viewMethodology": "View full methodology"
+  },
+  "footer": {
+    "tagline": "Pakistan Budget Clock · Independent · Non-partisan · Open source",
+    "dataAttribution": "Data from Ministry of Finance, Government of Pakistan",
+    "github": "View on GitHub"
+  },
+  "methodology": {
+    "title": "Methodology & Sources",
+    "intro": "This page explains how the numbers on Pakistan Budget Clock are calculated and where they come from.",
+    "calculationTitle": "How the counters work",
+    "calculationText": "The live counters divide annual budget allocations by the number of seconds in a year (31,536,000). This gives a per-second rate that accumulates from July 1 of each fiscal year.",
+    "caveats": {
+      "title": "Important caveats",
+      "averaging": {
+        "title": "Per-second rates are averages",
+        "text": "Real government spending is lumpy — debt payments happen on specific dates, salaries on specific days. The tickers show the mathematical average, not a live feed from the government treasury. This is standard methodology for all similar trackers worldwide."
+      },
+      "education": {
+        "title": "Education figures require context",
+        "text": "The federal education figure (Rs 113 billion) reflects only federal government spending. Due to the 18th Amendment (2010), education is primarily a provincial subject. Total education spending across all governments is approximately Rs 1,770 billion."
+      },
+      "budgetVsActual": {
+        "title": "Budget vs actual spending",
+        "text": "These figures are budget allocations, not actual disbursements. Pakistan's actual spending sometimes differs from allocations (underspending on development, overspending on debt)."
+      },
+      "defence": {
+        "title": "Defence figures may be understated",
+        "text": "Pakistan's official defence budget does not include military pensions (separate line: Rs 1,055 billion), spending through the PSDP on defence projects, or the military's commercial enterprise revenues/expenses."
+      },
+      "nonPartisan": {
+        "title": "This site is non-partisan",
+        "text": "The data shows the budget as passed by the current government. Both PML-N and PTI governments presided over rising debt burdens. The problem is structural, not partisan."
+      }
+    },
+    "sourcesTitle": "Data Sources"
+  },
+  "currency": {
+    "pkr": "PKR",
+    "usd": "USD"
+  }
+}

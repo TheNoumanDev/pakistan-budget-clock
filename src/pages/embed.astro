@@ -1,0 +1,223 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+const url = new URL(Astro.request.url);
+const lang = url.searchParams.get('lang') === 'ur' ? 'ur' : 'en';
+
+const embedCode = `<!-- Pakistan Budget Clock Widget -->
+<div id="pak-budget-widget" style="font-family: system-ui, sans-serif; background: #0a0a0b; border-radius: 8px; padding: 16px; max-width: 320px;">
+  <div style="text-align: center; margin-bottom: 12px;">
+    <span style="color: #6b7280; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;">Debt Interest Since July 1</span>
+  </div>
+  <div id="pak-debt-counter" style="font-size: 28px; font-weight: bold; color: #ef4444; text-align: center; font-variant-numeric: tabular-nums;"></div>
+  <div style="text-align: center; margin-top: 8px;">
+    <span style="color: #9ca3af; font-size: 12px;">Rs 260,241 per second</span>
+  </div>
+  <div style="text-align: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1);">
+    <a href="https://pakbudgetclock.com" target="_blank" style="color: #6b7280; font-size: 10px; text-decoration: none;">
+      Pakistan Budget Clock
+    </a>
+  </div>
+</div>
+<script>
+(function() {
+  const FISCAL_YEAR_START = new Date('2025-07-01T00:00:00+05:00');
+  const DEBT_PER_SECOND = 260241;
+  function updateCounter() {
+    const now = new Date();
+    const elapsed = (now - FISCAL_YEAR_START) / 1000;
+    const value = Math.max(0, Math.floor(elapsed * DEBT_PER_SECOND));
+    const el = document.getElementById('pak-debt-counter');
+    if (el) el.textContent = 'Rs ' + value.toLocaleString('en-PK');
+  }
+  updateCounter();
+  setInterval(updateCounter, 100);
+})();
+</script>`;
+
+const embedCodeMini = `<!-- Pakistan Budget Clock - Mini Widget -->
+<a href="https://pakbudgetclock.com" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; background: #0a0a0b; border-radius: 6px; padding: 8px 12px; text-decoration: none; font-family: system-ui, sans-serif;">
+  <span style="color: #ef4444; font-weight: bold;" id="pak-mini-counter"></span>
+  <span style="color: #6b7280; font-size: 11px;">debt/sec</span>
+</a>
+<script>
+(function() {
+  const FISCAL_YEAR_START = new Date('2025-07-01T00:00:00+05:00');
+  const DEBT_PER_SECOND = 260241;
+  function update() {
+    const elapsed = (new Date() - FISCAL_YEAR_START) / 1000;
+    const el = document.getElementById('pak-mini-counter');
+    if (el) el.textContent = 'Rs ' + Math.floor(elapsed * DEBT_PER_SECOND).toLocaleString('en-PK');
+  }
+  update();
+  setInterval(update, 100);
+})();
+</script>`;
+---
+
+<Layout title={lang === 'ur' ? 'ایمبیڈ وجیٹ | پاکستان بجٹ کلاک' : 'Embed Widget | Pakistan Budget Clock'} lang={lang}>
+  <Navbar lang={lang} />
+
+  <main class="py-12 md:py-16">
+    <div class="section-container">
+      <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl md:text-4xl font-bold mb-4 text-white text-center">
+          {lang === 'ur' ? 'ایمبیڈ وجیٹ' : 'Embed Widget'}
+        </h1>
+        <p class="text-gray-400 text-lg mb-12 text-center">
+          {lang === 'ur' ? 'اپنی ویب سائٹ پر لائیو بجٹ کاؤنٹر شامل کریں' : 'Add a live budget counter to your website'}
+        </p>
+
+        <!-- Standard Widget -->
+        <section id="standard-widget" class="mb-12">
+          <h2 class="text-xl font-bold mb-4 text-white">
+            {lang === 'ur' ? 'معیاری وجیٹ' : 'Standard Widget'}
+          </h2>
+          <p class="text-gray-400 mb-6">
+            {lang === 'ur' ? 'مکمل کاؤنٹر جو قرض کا سود ظاہر کرتا ہے۔' : 'Full counter showing debt interest accumulation.'}
+          </p>
+
+          <!-- Preview -->
+          <div class="mb-6 p-6 bg-dark-800 border border-white/10 rounded-lg">
+            <p class="text-xs text-gray-500 mb-4 uppercase tracking-wider">{lang === 'ur' ? 'پیش نظارہ' : 'Preview'}</p>
+            <div class="flex justify-center">
+              <div id="preview-widget" style="font-family: system-ui, sans-serif; background: #0a0a0b; border-radius: 8px; padding: 16px; max-width: 320px; border: 1px solid rgba(255,255,255,0.1);">
+                <div style="text-align: center; margin-bottom: 12px;">
+                  <span style="color: #6b7280; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;">Debt Interest Since July 1</span>
+                </div>
+                <div id="preview-counter" style="font-size: 28px; font-weight: bold; color: #ef4444; text-align: center; font-variant-numeric: tabular-nums;"></div>
+                <div style="text-align: center; margin-top: 8px;">
+                  <span style="color: #9ca3af; font-size: 12px;">Rs 260,241 per second</span>
+                </div>
+                <div style="text-align: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1);">
+                  <a href="/" style="color: #6b7280; font-size: 10px; text-decoration: none;">
+                    Pakistan Budget Clock
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Code -->
+          <div class="relative">
+            <p class="text-xs text-gray-500 mb-2 uppercase tracking-wider">{lang === 'ur' ? 'کوڈ کاپی کریں' : 'Copy Code'}</p>
+            <pre class="bg-dark-900 border border-white/10 rounded-lg p-4 overflow-x-auto text-sm text-gray-300"><code id="embed-code">{embedCode}</code></pre>
+            <button
+              class="absolute top-8 right-4 px-3 py-1.5 text-xs bg-white/10 hover:bg-white/20 text-gray-300 rounded transition-colors"
+              onclick="copyCode('embed-code')"
+            >
+              {lang === 'ur' ? 'کاپی' : 'Copy'}
+            </button>
+          </div>
+        </section>
+
+        <!-- Mini Widget -->
+        <section id="mini-widget" class="mb-12">
+          <h2 class="text-xl font-bold mb-4 text-white">
+            {lang === 'ur' ? 'چھوٹا وجیٹ' : 'Mini Widget'}
+          </h2>
+          <p class="text-gray-400 mb-6">
+            {lang === 'ur' ? 'انلائن بٹن جسے کسی بھی جگہ رکھا جا سکتا ہے۔' : 'Inline button that can be placed anywhere.'}
+          </p>
+
+          <!-- Preview -->
+          <div class="mb-6 p-6 bg-dark-800 border border-white/10 rounded-lg">
+            <p class="text-xs text-gray-500 mb-4 uppercase tracking-wider">{lang === 'ur' ? 'پیش نظارہ' : 'Preview'}</p>
+            <div class="flex justify-center">
+              <a href="/" style="display: inline-flex; align-items: center; gap: 8px; background: #0a0a0b; border-radius: 6px; padding: 8px 12px; text-decoration: none; font-family: system-ui, sans-serif; border: 1px solid rgba(255,255,255,0.1);">
+                <span style="color: #ef4444; font-weight: bold;" id="preview-mini-counter"></span>
+                <span style="color: #6b7280; font-size: 11px;">debt/sec</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Code -->
+          <div class="relative">
+            <p class="text-xs text-gray-500 mb-2 uppercase tracking-wider">{lang === 'ur' ? 'کوڈ کاپی کریں' : 'Copy Code'}</p>
+            <pre class="bg-dark-900 border border-white/10 rounded-lg p-4 overflow-x-auto text-sm text-gray-300"><code id="embed-code-mini">{embedCodeMini}</code></pre>
+            <button
+              class="absolute top-8 right-4 px-3 py-1.5 text-xs bg-white/10 hover:bg-white/20 text-gray-300 rounded transition-colors"
+              onclick="copyCode('embed-code-mini')"
+            >
+              {lang === 'ur' ? 'کاپی' : 'Copy'}
+            </button>
+          </div>
+        </section>
+
+        <!-- Usage Guidelines -->
+        <section id="usage" class="mb-12 p-6 bg-dark-800 border border-white/10 rounded-lg">
+          <h2 class="text-xl font-bold mb-4 text-white">
+            {lang === 'ur' ? 'استعمال کی ہدایات' : 'Usage Guidelines'}
+          </h2>
+          <ul class="space-y-3 text-gray-400">
+            <li class="flex items-start gap-2">
+              <span class="text-education-green mt-1">✓</span>
+              <span>{lang === 'ur' ? 'نیوز آرٹیکلز، بلاگز، اور ایڈیٹوریلز میں استعمال کریں' : 'Use in news articles, blogs, and editorials'}</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-education-green mt-1">✓</span>
+              <span>{lang === 'ur' ? 'تعلیمی مقاصد کے لیے استعمال کریں' : 'Use for educational purposes'}</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-education-green mt-1">✓</span>
+              <span>{lang === 'ur' ? 'سوشل میڈیا پر شیئر کریں' : 'Share on social media'}</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-debt-red mt-1">✗</span>
+              <span>{lang === 'ur' ? 'کوڈ میں ترمیم کر کے غلط معلومات نہ پھیلائیں' : 'Do not modify code to spread misinformation'}</span>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Back to Home -->
+        <div class="pt-8 border-t border-white/10">
+          <a
+            href={`/${lang === 'ur' ? '?lang=ur' : ''}`}
+            class="inline-flex items-center gap-2 text-debt-red hover:text-red-400 font-medium transition-colors"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            {lang === 'ur' ? 'واپس ہوم پیج' : 'Back to Home'}
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer lang={lang} />
+</Layout>
+
+<script>
+  // Preview counters
+  const FISCAL_YEAR_START = new Date('2025-07-01T00:00:00+05:00');
+  const DEBT_PER_SECOND = 260241;
+
+  function updatePreviews() {
+    const now = new Date();
+    const elapsed = (now.getTime() - FISCAL_YEAR_START.getTime()) / 1000;
+    const value = Math.max(0, Math.floor(elapsed * DEBT_PER_SECOND));
+    const formatted = 'Rs ' + value.toLocaleString('en-PK');
+
+    const counter = document.getElementById('preview-counter');
+    if (counter) counter.textContent = formatted;
+
+    const miniCounter = document.getElementById('preview-mini-counter');
+    if (miniCounter) miniCounter.textContent = formatted;
+  }
+
+  updatePreviews();
+  setInterval(updatePreviews, 100);
+
+  // Copy function
+  window.copyCode = function(elementId) {
+    const code = document.getElementById(elementId);
+    if (code) {
+      navigator.clipboard.writeText(code.textContent || '').then(() => {
+        alert('Copied to clipboard!');
+      });
+    }
+  };
+</script>

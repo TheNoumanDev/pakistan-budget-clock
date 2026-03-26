@@ -1,0 +1,176 @@
+---
+import LiveCounter from './LiveCounter.astro';
+
+interface Props {
+  lang?: 'en' | 'ur';
+}
+
+const { lang = 'en' } = Astro.props;
+
+import en from '../i18n/en.json';
+import ur from '../i18n/ur.json';
+
+const t = lang === 'ur' ? ur : en;
+
+// Import budget data
+import budgetData from '../../public/data/budget.json';
+
+const { categories } = budgetData;
+
+// Pre-calculate fiscal year start timestamp for the client script
+const fiscalYearStartTimestamp = new Date(budgetData.fiscalYearStart).getTime();
+const usdRateFallback = budgetData.exchangeRate.usdToPkr;
+---
+
+<section class="py-8 md:py-12" id="live-data" data-fiscal-year-start={fiscalYearStartTimestamp} data-usd-rate={usdRateFallback}>
+  <div class="section-container">
+
+    <!-- HERO: Debt Interest Counter -->
+    <div class="py-8 md:py-14">
+      <LiveCounter
+        id="debtInterest"
+        annualPKR={categories.debtInterest.annualPKR}
+        label="Debt Interest Paid"
+        labelUrdu={categories.debtInterest.labelUrdu}
+        percentOfBudget={categories.debtInterest.percentOfBudget}
+        variant="debt"
+        size="hero"
+        lang={lang}
+      />
+    </div>
+
+    <!-- Divider with "Meanwhile..." -->
+    <div class="relative py-8">
+      <div class="absolute inset-0 flex items-center">
+        <div class="w-full border-t border-white/5"></div>
+      </div>
+      <div class="relative flex justify-center">
+        <span class="px-4 bg-dark-950 text-sm uppercase tracking-[0.2em] text-gray-600">
+          {lang === 'ur' ? 'دوسری طرف' : 'Meanwhile'}
+        </span>
+      </div>
+    </div>
+
+    <!-- Secondary counters: Defence, Education, Health -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 lg:gap-20 py-8 stagger-children">
+
+      <!-- Defence -->
+      <div class="py-6">
+        <LiveCounter
+          id="defence"
+          annualPKR={categories.defence.annualPKR}
+          label="Defence"
+          labelUrdu={categories.defence.labelUrdu}
+          percentOfBudget={categories.defence.percentOfBudget}
+          variant="defence"
+          size="medium"
+          lang={lang}
+        />
+      </div>
+
+      <!-- Education -->
+      <div class="py-6">
+        <LiveCounter
+          id="education"
+          annualPKR={categories.education.annualPKR}
+          label="Education"
+          labelUrdu={categories.education.labelUrdu}
+          percentOfBudget={categories.education.percentOfBudget}
+          variant="education"
+          size="medium"
+          lang={lang}
+        />
+      </div>
+
+      <!-- Health -->
+      <div class="py-6">
+        <LiveCounter
+          id="health"
+          annualPKR={categories.health.annualPKR}
+          label="Health"
+          labelUrdu={categories.health.labelUrdu}
+          percentOfBudget={categories.health.percentOfBudget}
+          variant="health"
+          size="medium"
+          lang={lang}
+        />
+      </div>
+    </div>
+
+    <!-- Subtle context line -->
+    <p class="text-center text-xs uppercase tracking-[0.15em] text-gray-700 mt-8">
+      {lang === 'ur' ? 'یکم جولائی 2025 سے' : 'Since July 1, 2025'} · {lang === 'ur' ? 'کاؤنٹرز ہر سال ری سیٹ ہوتے ہیں' : 'Counters reset annually'}
+    </p>
+
+  </div>
+</section>
+
+<script>
+  // Initialize all counters
+  document.addEventListener('DOMContentLoaded', () => {
+    // Read fiscal year start from data attribute
+    const liveDataSection = document.getElementById('live-data');
+    const FISCAL_YEAR_START = parseInt(liveDataSection?.dataset.fiscalYearStart || '0', 10);
+    const SECONDS_IN_YEAR = 365 * 24 * 60 * 60;
+
+    let showUSD = false;
+    let usdRate = parseFloat(liveDataSection?.dataset.usdRate || '282');
+
+    // Get all counter elements IMMEDIATELY
+    const counterCards = document.querySelectorAll('[data-counter-card]');
+
+    // Fetch live exchange rate in background (non-blocking)
+    fetch('https://api.frankfurter.app/latest?from=USD&to=PKR')
+      .then(r => r.json())
+      .then(data => {
+        if (data.rates?.PKR) {
+          usdRate = data.rates.PKR;
+        }
+      })
+      .catch(() => {});
+
+    function formatNumber(valuePKR) {
+      if (showUSD) {
+        const usdValue = Math.round(valuePKR / usdRate);
+        return usdValue.toLocaleString('en-US');
+      }
+      return valuePKR.toLocaleString('en-PK');
+    }
+
+    function updateCounters() {
+      const now = Date.now();
+
+      // If fiscal year hasn't started, show 0
+      if (now < FISCAL_YEAR_START) {
+        counterCards.forEach((card) => {
+          const counter = card.querySelector('[data-counter]');
+          if (counter) counter.textContent = '0';
+        });
+        return;
+      }
+
+      const elapsedSeconds = (now - FISCAL_YEAR_START) / 1000;
+
+      counterCards.forEach((card) => {
+        const annualPKR = parseFloat(card.getAttribute('data-annual-pkr') || '0');
+        const perSecond = annualPKR / SECONDS_IN_YEAR;
+        const currentValue = Math.floor(perSecond * elapsedSeconds);
+
+        const counter = card.querySelector('[data-counter]');
+        if (counter) {
+          counter.textContent = formatNumber(currentValue);
+        }
+      });
+    }
+
+    // Update every 100ms for smooth animation
+    updateCounters();
+    setInterval(updateCounters, 100);
+
+    // Listen for currency change
+    window.addEventListener('currencyChange', (e) => {
+      showUSD = e.detail.currency === 'usd';
+      updateCounters();
+    });
+  });
+</script>

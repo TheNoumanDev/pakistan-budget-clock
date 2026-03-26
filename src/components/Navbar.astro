@@ -1,0 +1,119 @@
+---
+interface Props {
+  lang?: 'en' | 'ur';
+}
+
+const { lang = 'en' } = Astro.props;
+
+import en from '../i18n/en.json';
+import ur from '../i18n/ur.json';
+
+const t = lang === 'ur' ? ur : en;
+---
+
+<nav class="fixed top-0 left-0 right-0 z-50 bg-dark-950/80 backdrop-blur-md border-b border-white/5">
+  <div class="section-container">
+    <div class="flex items-center justify-between h-14">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-2 group">
+        <span class="text-sm font-semibold tracking-wide text-gray-400 group-hover:text-white transition-colors">
+          PAKISTAN <span class="text-debt-red">BUDGET</span> CLOCK
+        </span>
+      </a>
+
+      <!-- Right side: toggles -->
+      <div class="flex items-center gap-2">
+        <!-- Currency Toggle -->
+        <div class="flex items-center bg-white/5 rounded-full p-0.5" id="currency-toggle">
+          <button
+            class="px-2.5 py-1 text-xs font-medium rounded-full transition-all currency-btn active"
+            data-currency="pkr"
+          >
+            PKR
+          </button>
+          <button
+            class="px-2.5 py-1 text-xs font-medium rounded-full transition-all currency-btn"
+            data-currency="usd"
+          >
+            USD
+          </button>
+        </div>
+
+        <!-- Language Toggle -->
+        <a
+          href={lang === 'en' ? '/?lang=ur' : '/?lang=en'}
+          class="px-2.5 py-1 text-xs font-medium bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-full transition-all"
+        >
+          {lang === 'en' ? 'اردو' : 'EN'}
+        </a>
+
+        <!-- Compare link -->
+        <a
+          href={`/compare${lang === 'ur' ? '?lang=ur' : ''}`}
+          class="px-2.5 py-1 text-xs font-medium text-gray-500 hover:text-white transition-colors"
+        >
+          {t.nav.compare}
+        </a>
+
+        <!-- Downloads link -->
+        <a
+          href={`/downloads${lang === 'ur' ? '?lang=ur' : ''}`}
+          class="hidden sm:inline-block px-2.5 py-1 text-xs font-medium text-gray-500 hover:text-white transition-colors"
+        >
+          {lang === 'ur' ? 'ڈاؤن لوڈز' : 'Downloads'}
+        </a>
+
+        <!-- Embed link -->
+        <a
+          href={`/embed${lang === 'ur' ? '?lang=ur' : ''}`}
+          class="hidden sm:inline-block px-2.5 py-1 text-xs font-medium text-gray-500 hover:text-white transition-colors"
+        >
+          Embed
+        </a>
+
+        <!-- Methodology link -->
+        <a
+          href={`/methodology${lang === 'ur' ? '?lang=ur' : ''}`}
+          class="hidden sm:inline-block px-2.5 py-1 text-xs font-medium text-gray-500 hover:text-white transition-colors"
+        >
+          {t.nav.methodology}
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Spacer for fixed nav -->
+<div class="h-14"></div>
+
+<style>
+  .currency-btn.active {
+    @apply bg-white/10 text-white;
+  }
+
+  .currency-btn:not(.active) {
+    @apply text-gray-500 hover:text-gray-300;
+  }
+</style>
+
+<script>
+  // Currency toggle functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const currencyBtns = document.querySelectorAll('.currency-btn');
+
+    currencyBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const currency = btn.getAttribute('data-currency');
+
+        // Update active state
+        currencyBtns.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Dispatch custom event for counters to listen to
+        window.dispatchEvent(
+          new CustomEvent('currencyChange', { detail: { currency } })
+        );
+      });
+    });
+  });
+</script>

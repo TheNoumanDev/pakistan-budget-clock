@@ -1,0 +1,133 @@
+---
+interface Props {
+  lang?: 'en' | 'ur';
+}
+
+const { lang = 'en' } = Astro.props;
+
+import en from '../i18n/en.json';
+import ur from '../i18n/ur.json';
+
+const t = lang === 'ur' ? ur : en;
+---
+
+<section class="py-16 md:py-24 border-t border-white/5" id="compare">
+  <div class="section-container">
+    <h2 class="text-sm uppercase tracking-[0.2em] text-gray-500 text-center mb-2">
+      {t.chart.title}
+    </h2>
+    <p class="text-gray-600 text-center text-sm mb-10">
+      {t.chart.subtitle}
+    </p>
+
+    <div class="max-w-4xl mx-auto" style="height: 450px;">
+      <canvas id="budget-breakdown-chart"></canvas>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Wait for both DOM and Chart.js
+  async function initBudgetChart() {
+    if (typeof Chart === 'undefined') {
+      // Chart.js not loaded yet, retry in 100ms
+      setTimeout(initBudgetChart, 100);
+      return;
+    }
+
+    const ctx = document.getElementById('budget-breakdown-chart');
+    if (!ctx) return;
+
+    // Check if chart already exists on canvas
+    const existingChart = Chart.getChart(ctx);
+    if (existingChart) return;
+
+    // Fetch budget data
+    const response = await fetch('/data/budget.json');
+    const budgetData = await response.json();
+
+    const categories = [
+      { key: 'debtInterest', label: 'Debt Servicing', pct: 46.7, color: '#ef4444' },
+      { key: 'nfcTransfers', label: 'NFC Transfers', pct: 18.2, color: '#3b82f6' },
+      { key: 'defence', label: 'Defence', pct: 14.6, color: '#94a3b8' },
+      { key: 'other', label: 'Other', pct: 8.1, color: '#6b7280' },
+      { key: 'militaryPensions', label: 'Pensions', pct: 6.0, color: '#78716c' },
+      { key: 'psdp', label: 'PSDP', pct: 5.7, color: '#84cc16' },
+      { key: 'education', label: 'Education', pct: 0.64, color: '#22c55e' },
+      { key: 'health', label: 'Health', pct: 0.13, color: '#14b8a6' },
+    ];
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: categories.map(c => c.label),
+        datasets: [{
+          data: categories.map(c => c.pct),
+          backgroundColor: categories.map(c => c.color),
+          borderRadius: 4,
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            backgroundColor: '#1a1a1d',
+            titleColor: '#fff',
+            bodyColor: '#9ca3af',
+            borderColor: 'rgba(255,255,255,0.1)',
+            borderWidth: 1,
+            callbacks: {
+              label: function(context) {
+                const cat = categories[context.dataIndex];
+                const data = budgetData.categories[cat.key];
+                const valueBillion = data ? (data.annualPKR / 1_000_000_000).toFixed(0) : '0';
+                return `${context.parsed.x}% (Rs ${valueBillion}B)`;
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            max: 50,
+            ticks: {
+              color: '#6b7280',
+              callback: function(value) {
+                return value + '%';
+              }
+            },
+            grid: {
+              color: 'rgba(255,255,255,0.05)'
+            }
+          },
+          y: {
+            ticks: {
+              color: '#9ca3af'
+            },
+            grid: {
+              display: false
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // Start when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBudgetChart);
+  } else {
+    initBudgetChart();
+  }
+</script>
+
+<style>
+  #budget-breakdown-chart {
+    width: 100% !important;
+    height: 100% !important;
+  }
+</style>

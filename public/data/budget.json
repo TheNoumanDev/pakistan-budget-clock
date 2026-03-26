@@ -1,0 +1,439 @@
+{
+  "fiscalYear": "2025-26",
+  "fiscalYearStart": "2025-07-01T00:00:00+05:00",
+  "fiscalYearEnd": "2026-06-30T23:59:59+05:00",
+  "lastUpdated": "2025-06-10",
+  "source": "Ministry of Finance, Government of Pakistan - Budget in Brief FY 2025-26",
+  "sourceUrl": "https://www.finance.gov.pk/fb_2025_26.html",
+
+  "totalBudget": {
+    "annualPKR": 17573000000000,
+    "label": "Total Federal Budget",
+    "labelUrdu": "کل وفاقی بجٹ"
+  },
+
+  "categories": {
+    "debtInterest": {
+      "annualPKR": 8207000000000,
+      "percentOfBudget": 46.7,
+      "label": "Debt Interest",
+      "labelUrdu": "قرض کا سود",
+      "color": "#A32D2D",
+      "bgColor": "#FCEBEB",
+      "description": "Interest payments on domestic and foreign debt",
+      "descriptionUrdu": "ملکی اور غیر ملکی قرضوں پر سود کی ادائیگی"
+    },
+    "defence": {
+      "annualPKR": 2558000000000,
+      "percentOfBudget": 14.6,
+      "label": "Defence",
+      "labelUrdu": "دفاع",
+      "color": "#888780",
+      "bgColor": "#F5F5F4",
+      "description": "Military and defence spending (excludes pensions)",
+      "descriptionUrdu": "فوجی اور دفاعی اخراجات (پنشن شامل نہیں)"
+    },
+    "nfcTransfers": {
+      "annualPKR": 3200000000000,
+      "percentOfBudget": 18.2,
+      "label": "NFC Transfers",
+      "labelUrdu": "این ایف سی منتقلی",
+      "color": "#378ADD",
+      "bgColor": "#EBF4FC",
+      "description": "Transfers to provinces under National Finance Commission",
+      "descriptionUrdu": "قومی مالیاتی کمیشن کے تحت صوبوں کو منتقلی"
+    },
+    "militaryPensions": {
+      "annualPKR": 1055000000000,
+      "percentOfBudget": 6.0,
+      "label": "Military Pensions",
+      "labelUrdu": "فوجی پنشن",
+      "color": "#B4B2A9",
+      "bgColor": "#F5F5F4",
+      "description": "Pensions for retired military personnel",
+      "descriptionUrdu": "ریٹائرڈ فوجی اہلکاروں کی پنشن"
+    },
+    "psdp": {
+      "annualPKR": 1000000000000,
+      "percentOfBudget": 5.7,
+      "label": "Development (PSDP)",
+      "labelUrdu": "ترقیاتی پروگرام",
+      "color": "#97C459",
+      "bgColor": "#F0F7E6",
+      "description": "Public Sector Development Programme",
+      "descriptionUrdu": "پبلک سیکٹر ڈویلپمنٹ پروگرام"
+    },
+    "education": {
+      "annualPKR": 113000000000,
+      "percentOfBudget": 0.64,
+      "label": "Education (Federal)",
+      "labelUrdu": "تعلیم (وفاقی)",
+      "color": "#3B6D11",
+      "bgColor": "#E8F5E0",
+      "description": "Federal education spending only. Provincial spending is separate.",
+      "descriptionUrdu": "صرف وفاقی تعلیمی اخراجات۔ صوبائی اخراجات علیحدہ ہیں۔",
+      "note": "Total education (federal + provincial) is approximately Rs 1,770 billion"
+    },
+    "health": {
+      "annualPKR": 22000000000,
+      "percentOfBudget": 0.13,
+      "label": "Health (Federal)",
+      "labelUrdu": "صحت (وفاقی)",
+      "color": "#1D9E75",
+      "bgColor": "#E0F5EF",
+      "description": "Federal health spending only. Provincial spending is separate.",
+      "descriptionUrdu": "صرف وفاقی صحت کے اخراجات۔ صوبائی اخراجات علیحدہ ہیں۔"
+    },
+    "other": {
+      "annualPKR": 1418000000000,
+      "percentOfBudget": 8.1,
+      "label": "Other",
+      "labelUrdu": "دیگر",
+      "color": "#D3D1C7",
+      "bgColor": "#F9F9F8",
+      "description": "Subsidies, grants, running of civil government, etc.",
+      "descriptionUrdu": "سبسڈیز، گرانٹس، سول حکومت کا انتظام وغیرہ"
+    }
+  },
+
+  "historicalData": [
+    {
+      "fiscalYear": "2015-16",
+      "totalBudget": 4451000000000,
+      "debtInterest": 1280000000000,
+      "defence": 781000000000,
+      "nfcTransfers": 1400000000000,
+      "militaryPensions": 178000000000,
+      "psdp": 600000000000,
+      "education": 68000000000,
+      "health": 10000000000,
+      "other": 134000000000
+    },
+    {
+      "fiscalYear": "2016-17",
+      "totalBudget": 4895000000000,
+      "debtInterest": 1360000000000,
+      "defence": 860000000000,
+      "nfcTransfers": 1550000000000,
+      "militaryPensions": 210000000000,
+      "psdp": 680000000000,
+      "education": 72000000000,
+      "health": 11000000000,
+      "other": 152000000000
+    },
+    {
+      "fiscalYear": "2017-18",
+      "totalBudget": 5524000000000,
+      "debtInterest": 1520000000000,
+      "defence": 999000000000,
+      "nfcTransfers": 1780000000000,
+      "militaryPensions": 280000000000,
+      "psdp": 700000000000,
+      "education": 76000000000,
+      "health": 12000000000,
+      "other": 157000000000
+    },
+    {
+      "fiscalYear": "2018-19",
+      "totalBudget": 5932000000000,
+      "debtInterest": 1840000000000,
+      "defence": 1100000000000,
+      "nfcTransfers": 1900000000000,
+      "militaryPensions": 340000000000,
+      "psdp": 500000000000,
+      "education": 78000000000,
+      "health": 13000000000,
+      "other": 161000000000
+    },
+    {
+      "fiscalYear": "2019-20",
+      "totalBudget": 7022000000000,
+      "debtInterest": 2619000000000,
+      "defence": 1152000000000,
+      "nfcTransfers": 2050000000000,
+      "militaryPensions": 420000000000,
+      "psdp": 450000000000,
+      "education": 80000000000,
+      "health": 14000000000,
+      "other": 237000000000
+    },
+    {
+      "fiscalYear": "2020-21",
+      "totalBudget": 7137000000000,
+      "debtInterest": 2946000000000,
+      "defence": 1289000000000,
+      "nfcTransfers": 2100000000000,
+      "militaryPensions": 470000000000,
+      "psdp": 350000000000,
+      "education": 83000000000,
+      "health": 15000000000,
+      "other": 284000000000
+    },
+    {
+      "fiscalYear": "2021-22",
+      "totalBudget": 8487000000000,
+      "debtInterest": 3060000000000,
+      "defence": 1370000000000,
+      "nfcTransfers": 2500000000000,
+      "militaryPensions": 530000000000,
+      "psdp": 550000000000,
+      "education": 83000000000,
+      "health": 16000000000,
+      "other": 378000000000
+    },
+    {
+      "fiscalYear": "2022-23",
+      "totalBudget": 9502000000000,
+      "debtInterest": 3950000000000,
+      "defence": 1523000000000,
+      "nfcTransfers": 2600000000000,
+      "militaryPensions": 670000000000,
+      "psdp": 550000000000,
+      "education": 84000000000,
+      "health": 17000000000,
+      "other": 508000000000
+    },
+    {
+      "fiscalYear": "2023-24",
+      "totalBudget": 14460000000000,
+      "debtInterest": 7300000000000,
+      "defence": 1804000000000,
+      "nfcTransfers": 2900000000000,
+      "militaryPensions": 760000000000,
+      "psdp": 800000000000,
+      "education": 96000000000,
+      "health": 19000000000,
+      "other": 781000000000
+    },
+    {
+      "fiscalYear": "2024-25",
+      "totalBudget": 18877000000000,
+      "debtInterest": 8945000000000,
+      "defence": 2130000000000,
+      "nfcTransfers": 3100000000000,
+      "militaryPensions": 910000000000,
+      "psdp": 940000000000,
+      "education": 106000000000,
+      "health": 20000000000,
+      "other": 1726000000000
+    },
+    {
+      "fiscalYear": "2025-26",
+      "totalBudget": 17573000000000,
+      "debtInterest": 8207000000000,
+      "defence": 2558000000000,
+      "nfcTransfers": 3200000000000,
+      "militaryPensions": 1055000000000,
+      "psdp": 1000000000000,
+      "education": 113000000000,
+      "health": 22000000000,
+      "other": 1418000000000
+    }
+  ],
+
+  "perCapitaDebt": {
+    "totalNationalDebt": 67000000000000,
+    "population": 240000000,
+    "perCapitaPKR": 279167,
+    "label": "Your share of Pakistan's debt",
+    "labelUrdu": "پاکستان کے قرض میں آپ کا حصہ",
+    "note": "Total domestic + external debt divided by population"
+  },
+
+  "funComparisons": {
+    "debtPerSecondCanBuy": [
+      {
+        "item": "iPhone 15 Pro",
+        "unitCostPKR": 500000,
+        "perMinute": 31,
+        "label": "iPhones per minute",
+        "labelUrdu": "آئی فون فی منٹ"
+      },
+      {
+        "item": "Toyota Corolla",
+        "unitCostPKR": 6500000,
+        "perHour": 144,
+        "label": "Corollas per hour",
+        "labelUrdu": "کرولا فی گھنٹہ"
+      },
+      {
+        "item": "Basic Rural House",
+        "unitCostPKR": 3000000,
+        "perHour": 312,
+        "label": "Houses per hour",
+        "labelUrdu": "گھر فی گھنٹہ"
+      }
+    ],
+    "yearOfDebtInterestCanBuild": [
+      {
+        "item": "Schools",
+        "unitCostPKR": 100000000,
+        "total": 82070,
+        "label": "primary schools",
+        "labelUrdu": "پرائمری سکول"
+      },
+      {
+        "item": "Hospitals",
+        "unitCostPKR": 500000000,
+        "total": 16414,
+        "label": "rural hospitals",
+        "labelUrdu": "دیہی ہسپتال"
+      },
+      {
+        "item": "University Scholarships",
+        "unitCostPKR": 500000,
+        "total": 16414000,
+        "label": "full scholarships",
+        "labelUrdu": "مکمل وظائف"
+      }
+    ]
+  },
+
+  "comparisonStats": {
+    "outOfSchoolChildren": {
+      "value": 25000000,
+      "label": "Children out of school",
+      "labelUrdu": "اسکول سے باہر بچے",
+      "source": "UNICEF Pakistan 2024"
+    },
+    "costToEducateAll": {
+      "valuePKR": 375000000000,
+      "label": "Annual cost to educate them",
+      "labelUrdu": "ان سب کو تعلیم دینے کی سالانہ لاگت",
+      "note": "Estimated at Rs 15,000 per child per year"
+    },
+    "daysOfDebtToCoverEducation": {
+      "value": 17,
+      "label": "Days of debt interest to cover education gap",
+      "labelUrdu": "تعلیمی خلا پورا کرنے کے لیے قرض کے سود کے دن"
+    },
+    "childStuntingRate": {
+      "value": 0.40,
+      "label": "Children under 5 who are stunted",
+      "labelUrdu": "5 سال سے کم عمر بچے جو نشوونما میں پیچھے ہیں",
+      "source": "UNICEF Pakistan 2024"
+    },
+    "literacyRate": {
+      "value": 0.606,
+      "label": "Pakistan literacy rate",
+      "labelUrdu": "پاکستان کی شرح خواندگی",
+      "source": "Economic Survey 2024-25"
+    },
+    "healthSpendPerCapita": {
+      "valuePKR": 83,
+      "label": "Federal health spend per Pakistani per year",
+      "labelUrdu": "ہر پاکستانی پر سالانہ وفاقی صحت کا خرچہ",
+      "note": "Rs 22B / 240M population"
+    },
+    "taxRevenueToDebt": {
+      "value": 0.80,
+      "label": "Tax revenue used for debt servicing",
+      "labelUrdu": "قرض کی ادائیگی کے لیے استعمال ہونے والی ٹیکس آمدنی",
+      "source": "FBR data via Hamariweb, Aug 2025"
+    },
+    "population": {
+      "value": 240000000,
+      "label": "Pakistan population (estimated)",
+      "labelUrdu": "پاکستان کی آبادی (تخمینہ)"
+    },
+    "teacherMonthlySalary": {
+      "valuePKR": 45000,
+      "label": "Average government teacher monthly salary",
+      "labelUrdu": "سرکاری استاد کی اوسط ماہانہ تنخواہ"
+    }
+  },
+
+  "exchangeRate": {
+    "usdToPkr": 282,
+    "lastUpdated": "2025-06-01",
+    "note": "Fallback rate. Live rate fetched from API when available."
+  },
+
+  "inflationData": {
+    "source": "World Bank, Pakistan Bureau of Statistics",
+    "sourceUrl": "https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG?locations=PK",
+    "annual": [
+      { "fiscalYear": "2015-16", "rate": 2.9 },
+      { "fiscalYear": "2016-17", "rate": 4.2 },
+      { "fiscalYear": "2017-18", "rate": 3.9 },
+      { "fiscalYear": "2018-19", "rate": 6.8 },
+      { "fiscalYear": "2019-20", "rate": 10.7 },
+      { "fiscalYear": "2020-21", "rate": 8.9 },
+      { "fiscalYear": "2021-22", "rate": 12.2 },
+      { "fiscalYear": "2022-23", "rate": 29.2 },
+      { "fiscalYear": "2023-24", "rate": 24.5 },
+      { "fiscalYear": "2024-25", "rate": 12.6 },
+      { "fiscalYear": "2025-26", "rate": 4.5, "note": "projected" }
+    ],
+    "cumulativeInflation2015to2025": 185.6,
+    "note": "Cumulative inflation means Rs 100 in 2015 is worth Rs 285.6 in 2025"
+  },
+
+  "provincialBudgets": {
+    "fiscalYear": "2025-26",
+    "source": "Provincial Finance Departments",
+    "provinces": {
+      "punjab": {
+        "totalBudget": 5330000000000,
+        "developmentBudget": 1240000000000,
+        "label": "Punjab",
+        "labelUrdu": "پنجاب",
+        "sourceUrl": "https://finance.punjab.gov.pk"
+      },
+      "sindh": {
+        "totalBudget": 3450000000000,
+        "developmentBudget": 850000000000,
+        "label": "Sindh",
+        "labelUrdu": "سندھ",
+        "sourceUrl": "https://finance.gos.pk"
+      },
+      "kpk": {
+        "totalBudget": 2119000000000,
+        "developmentBudget": 520000000000,
+        "label": "Khyber Pakhtunkhwa",
+        "labelUrdu": "خیبر پختونخوا",
+        "sourceUrl": "https://finance.kp.gov.pk"
+      },
+      "balochistan": {
+        "totalBudget": 950000000000,
+        "developmentBudget": 250000000000,
+        "label": "Balochistan",
+        "labelUrdu": "بلوچستان",
+        "sourceUrl": "https://balochistan.gov.pk"
+      }
+    }
+  },
+
+  "indiaComparison": {
+    "source": "Ministry of Finance, Government of India",
+    "sourceUrl": "https://www.indiabudget.gov.in/",
+    "note": "India figures in INR, converted to PKR at 1 INR = 3.4 PKR for comparison",
+    "fiscalYear": "2025-26",
+    "budgetINR": 50650000000000000,
+    "budgetPKR": 172210000000000000,
+    "debtInterestPercent": 25,
+    "defencePercent": 8,
+    "educationPercent": 2.9,
+    "healthPercent": 2.1,
+    "populationMillions": 1450,
+    "perCapitaBudgetINR": 34930,
+    "comparison": {
+      "debtInterestOfBudget": {
+        "pakistan": 46.7,
+        "india": 25
+      },
+      "defenceOfBudget": {
+        "pakistan": 14.6,
+        "india": 8
+      },
+      "educationOfBudget": {
+        "pakistan": 0.64,
+        "india": 2.9
+      },
+      "healthOfBudget": {
+        "pakistan": 0.13,
+        "india": 2.1
+      }
+    }
+  }
+}

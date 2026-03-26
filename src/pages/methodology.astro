@@ -1,0 +1,186 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+// Get language from URL query param
+const url = new URL(Astro.request.url);
+const lang = url.searchParams.get('lang') === 'ur' ? 'ur' : 'en';
+
+import en from '../i18n/en.json';
+import ur from '../i18n/ur.json';
+
+const t = lang === 'ur' ? ur : en;
+
+const sources = [
+  {
+    name: 'Ministry of Finance - Budget Portal',
+    url: 'https://www.finance.gov.pk',
+    description: 'Official budget publications for all fiscal years'
+  },
+  {
+    name: 'Budget in Brief FY 2025-26',
+    url: 'https://finance.gov.pk/budget/budget_2025_26/budget_in_brief_10062025.pdf',
+    description: 'Primary source for all FY 2025-26 figures'
+  },
+  {
+    name: 'Fiscal Operations Reports',
+    url: 'https://www.finance.gov.pk/fiscal_main.html',
+    description: 'Actual spending vs budget allocations'
+  },
+  {
+    name: 'Pakistan Economic Survey',
+    url: 'https://www.finance.gov.pk/survey_2025.html',
+    description: 'Education, health, and economic statistics'
+  },
+  {
+    name: 'UNICEF Pakistan',
+    url: 'https://unicef.org/pakistan',
+    description: 'Out-of-school children and child nutrition data'
+  },
+  {
+    name: 'SIPRI Military Expenditure Database',
+    url: 'https://sipri.org/databases/milex',
+    description: 'International military spending verification'
+  },
+];
+---
+
+<Layout title={`${t.methodology.title} | Pakistan Budget Clock`} lang={lang}>
+  <Navbar lang={lang} />
+
+  <main class="py-12 md:py-16">
+    <div class="section-container">
+      <div class="max-w-3xl mx-auto">
+        <!-- Header -->
+        <h1 class="text-3xl md:text-4xl font-bold mb-4 text-white">
+          {t.methodology.title}
+        </h1>
+        <p class="text-gray-400 text-lg mb-12">
+          {t.methodology.intro}
+        </p>
+
+        <!-- Calculation Section -->
+        <section id="calculation" class="mb-12">
+          <h2 class="text-2xl font-bold mb-4 text-white">
+            {t.methodology.calculationTitle}
+          </h2>
+          <p class="text-gray-400 mb-4">
+            {t.methodology.calculationText}
+          </p>
+          <div class="bg-dark-800 border border-white/10 rounded-lg p-4 font-mono text-sm">
+            <p class="text-gray-500">// Formula:</p>
+            <p class="text-gray-300">perSecond = annualBudget / 31,536,000</p>
+            <p class="text-gray-300">currentValue = perSecond × secondsSinceJuly1</p>
+          </div>
+        </section>
+
+        <!-- Caveats Section -->
+        <section id="caveats" class="mb-12">
+          <h2 class="text-2xl font-bold mb-6 text-white">
+            {t.methodology.caveats.title}
+          </h2>
+
+          <div class="space-y-6">
+            <!-- Caveat 1: Averaging -->
+            <div class="border-l-4 border-yellow-500 pl-4">
+              <h3 class="font-bold text-lg mb-2 text-white">
+                {t.methodology.caveats.averaging.title}
+              </h3>
+              <p class="text-gray-400">
+                {t.methodology.caveats.averaging.text}
+              </p>
+            </div>
+
+            <!-- Caveat 2: Education -->
+            <div class="border-l-4 border-education-green pl-4">
+              <h3 class="font-bold text-lg mb-2 text-white">
+                {t.methodology.caveats.education.title}
+              </h3>
+              <p class="text-gray-400">
+                {t.methodology.caveats.education.text}
+              </p>
+            </div>
+
+            <!-- Caveat 3: Budget vs Actual -->
+            <div class="border-l-4 border-blue-500 pl-4">
+              <h3 class="font-bold text-lg mb-2 text-white">
+                {t.methodology.caveats.budgetVsActual.title}
+              </h3>
+              <p class="text-gray-400">
+                {t.methodology.caveats.budgetVsActual.text}
+              </p>
+            </div>
+
+            <!-- Caveat 4: Defence -->
+            <div class="border-l-4 border-slate-400 pl-4">
+              <h3 class="font-bold text-lg mb-2 text-white">
+                {t.methodology.caveats.defence.title}
+              </h3>
+              <p class="text-gray-400">
+                {t.methodology.caveats.defence.text}
+              </p>
+            </div>
+
+            <!-- Caveat 5: Non-partisan -->
+            <div class="border-l-4 border-purple-500 pl-4">
+              <h3 class="font-bold text-lg mb-2 text-white">
+                {t.methodology.caveats.nonPartisan.title}
+              </h3>
+              <p class="text-gray-400">
+                {t.methodology.caveats.nonPartisan.text}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Data Sources Section -->
+        <section id="sources">
+          <h2 class="text-2xl font-bold mb-6 text-white">
+            {t.methodology.sourcesTitle}
+          </h2>
+
+          <div class="space-y-4">
+            {sources.map(source => (
+              <a
+                href={source.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block p-4 bg-dark-800 border border-white/10 rounded-lg hover:border-white/20 transition-colors group"
+              >
+                <div class="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 class="font-semibold text-white group-hover:text-debt-red transition-colors">
+                      {source.name}
+                    </h3>
+                    <p class="text-sm text-gray-500 mt-1">
+                      {source.description}
+                    </p>
+                  </div>
+                  <svg class="w-5 h-5 text-gray-600 group-hover:text-debt-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <!-- Back to Home -->
+        <div class="mt-12 pt-8 border-t border-white/10">
+          <a
+            href="/"
+            class="inline-flex items-center gap-2 text-debt-red hover:text-red-400 font-medium transition-colors"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            {lang === 'ur' ? 'واپس ہوم پیج' : 'Back to Home'}
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer lang={lang} />
+</Layout>

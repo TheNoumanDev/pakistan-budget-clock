@@ -1,0 +1,123 @@
+---
+interface Props {
+  lang?: 'en' | 'ur';
+}
+
+const { lang = 'en' } = Astro.props;
+
+import en from '../i18n/en.json';
+import ur from '../i18n/ur.json';
+
+const t = lang === 'ur' ? ur : en;
+
+// Debt interest per second for calculations
+const DEBT_PER_SECOND = 260241;
+const TEACHER_SALARY = 45000;
+---
+
+<section class="py-16 md:py-24 border-t border-white/5">
+  <div class="section-container">
+    <h2 class="text-sm uppercase tracking-[0.2em] text-gray-500 text-center mb-12">
+      {t.timeOnPage.title}
+    </h2>
+
+    <div class="max-w-4xl mx-auto">
+      <!-- Time Counter -->
+      <div class="text-center mb-10">
+        <p class="text-xs uppercase tracking-wider text-gray-600 mb-2">{t.timeOnPage.timeOnPage}</p>
+        <div class="text-5xl md:text-6xl font-bold font-mono text-white" id="time-on-page">
+          0
+        </div>
+        <p class="text-gray-600 text-sm mt-2">{t.timeOnPage.seconds}</p>
+      </div>
+
+      <!-- Debt Paid While Reading -->
+      <div class="text-center mb-12">
+        <p class="text-xs uppercase tracking-wider text-gray-600 mb-2">{t.timeOnPage.debtPaid}</p>
+        <div class="text-3xl md:text-4xl font-bold font-mono text-debt-red glow-red" id="debt-while-reading">
+          0
+        </div>
+      </div>
+
+      <!-- Equivalents Grid -->
+      <div class="grid md:grid-cols-3 gap-4">
+        <!-- 1 Minute -->
+        <div class="impact-card text-center p-6">
+          <p class="text-xs uppercase tracking-wider text-gray-600 mb-2">{t.timeOnPage.equivalents.oneMinute}</p>
+          <p class="text-xl font-bold font-mono text-debt-red mb-1">Rs 15.6M</p>
+          <p class="text-sm text-gray-500">
+            = <span class="text-health-teal">156</span> {lang === 'ur' ? 'بچوں کی ویکسینز' : 'child vaccination programs'}
+          </p>
+        </div>
+
+        <!-- 1 Hour -->
+        <div class="impact-card text-center p-6">
+          <p class="text-xs uppercase tracking-wider text-gray-600 mb-2">{t.timeOnPage.equivalents.oneHour}</p>
+          <p class="text-xl font-bold font-mono text-debt-red mb-1">Rs 937M</p>
+          <p class="text-sm text-gray-500">
+            = <span class="text-health-teal">9</span> {lang === 'ur' ? 'دیہی ہسپتال' : 'rural hospitals built'}
+          </p>
+        </div>
+
+        <!-- 1 Day -->
+        <div class="impact-card text-center p-6">
+          <p class="text-xs uppercase tracking-wider text-gray-600 mb-2">{t.timeOnPage.equivalents.oneDay}</p>
+          <p class="text-xl font-bold font-mono text-debt-red mb-1">Rs 22.5B</p>
+          <p class="text-sm text-gray-500">
+            = <span class="text-education-green">225</span> {lang === 'ur' ? 'نئے سکول' : 'new schools built'}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ DEBT_PER_SECOND, TEACHER_SALARY }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const timeElement = document.getElementById('time-on-page');
+    const debtElement = document.getElementById('debt-while-reading');
+
+    let startTime = Date.now();
+    let showUSD = false;
+    let usdRate = 282;
+
+    // Try to get exchange rate
+    fetch('https://api.frankfurter.app/latest?from=USD&to=PKR')
+      .then(r => r.json())
+      .then(data => {
+        if (data.rates?.PKR) usdRate = data.rates.PKR;
+      })
+      .catch(() => {});
+
+    function formatCurrency(valuePKR) {
+      if (showUSD) {
+        const usdValue = Math.round(valuePKR / usdRate);
+        return `$ ${usdValue.toLocaleString('en-US')}`;
+      }
+      return `Rs ${valuePKR.toLocaleString('en-PK')}`;
+    }
+
+    function update() {
+      const elapsed = Math.floor((Date.now() - startTime) / 1000);
+      const debtPaid = Math.floor(elapsed * DEBT_PER_SECOND);
+
+      if (timeElement) {
+        timeElement.textContent = elapsed.toString();
+      }
+
+      if (debtElement) {
+        debtElement.textContent = formatCurrency(debtPaid);
+      }
+    }
+
+    // Update every second
+    update();
+    setInterval(update, 1000);
+
+    // Listen for currency change
+    window.addEventListener('currencyChange', (e) => {
+      showUSD = e.detail.currency === 'usd';
+      update();
+    });
+  });
+</script>

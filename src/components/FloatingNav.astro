@@ -1,0 +1,196 @@
+---
+interface Props {
+  lang?: 'en' | 'ur';
+}
+
+const { lang = 'en' } = Astro.props;
+
+// Get current path to determine which page we're on
+const currentPath = Astro.url.pathname;
+const isHomePage = currentPath === '/' || currentPath === '';
+const isComparePage = currentPath === '/compare';
+const isEmbedPage = currentPath === '/embed';
+const isMethodologyPage = currentPath === '/methodology';
+const isDownloadsPage = currentPath === '/downloads';
+
+// Define sections for each page
+const homeSections = [
+  { id: 'live-data', label: 'Live Data', labelUrdu: 'لائیو ڈیٹا', icon: '📊' },
+  { id: 'while-reading', label: 'While Reading', labelUrdu: 'پڑھتے ہوئے', icon: '⏱️' },
+  { id: 'budget-chart', label: 'Budget Chart', labelUrdu: 'بجٹ چارٹ', icon: '📈' },
+  { id: 'impact', label: 'Impact', labelUrdu: 'اثر', icon: '👶' },
+  { id: 'historical', label: 'Historical', labelUrdu: 'تاریخی', icon: '📉' },
+  { id: 'share', label: 'Share', labelUrdu: 'شیئر', icon: '📤' },
+];
+
+const compareSections = [
+  { id: 'pak-vs-india', label: 'Pak vs India', labelUrdu: 'پاک بمقابلہ بھارت', icon: '⚖️' },
+  { id: 'budget-chart', label: 'Budget Chart', labelUrdu: 'بجٹ چارٹ', icon: '📈' },
+  { id: 'data-table', label: 'Data Table', labelUrdu: 'ڈیٹا ٹیبل', icon: '📋' },
+  { id: 'provincial', label: 'Provincial', labelUrdu: 'صوبائی', icon: '🏛️' },
+  { id: 'nfc-info', label: 'NFC Info', labelUrdu: 'این ایف سی', icon: '💰' },
+  { id: 'inflation', label: 'Inflation', labelUrdu: 'مہنگائی', icon: '📉' },
+];
+
+const embedSections = [
+  { id: 'standard-widget', label: 'Standard', labelUrdu: 'معیاری', icon: '🔲' },
+  { id: 'mini-widget', label: 'Mini', labelUrdu: 'چھوٹا', icon: '▪️' },
+  { id: 'usage', label: 'Usage', labelUrdu: 'استعمال', icon: '📖' },
+];
+
+const methodologySections = [
+  { id: 'calculation', label: 'Calculation', labelUrdu: 'حساب', icon: '🔢' },
+  { id: 'caveats', label: 'Caveats', labelUrdu: 'احتیاط', icon: '⚠️' },
+  { id: 'sources', label: 'Sources', labelUrdu: 'ذرائع', icon: '📚' },
+];
+
+const downloadsSections = [
+  { id: 'overview', label: 'Overview', labelUrdu: 'خلاصہ', icon: '📊' },
+  { id: 'current-year', label: 'Latest', labelUrdu: 'تازہ ترین', icon: '🆕' },
+  { id: 'all-budgets', label: 'All Budgets', labelUrdu: 'تمام بجٹ', icon: '📁' },
+  { id: 'fiscal-ops', label: 'Fiscal Ops', labelUrdu: 'مالیاتی', icon: '📈' },
+  { id: 'provincial', label: 'Provincial', labelUrdu: 'صوبائی', icon: '🏛️' },
+  { id: 'other-resources', label: 'Resources', labelUrdu: 'ذرائع', icon: '🔗' },
+];
+
+// Select sections based on current page
+const sections = isHomePage ? homeSections
+  : isComparePage ? compareSections
+  : isEmbedPage ? embedSections
+  : isMethodologyPage ? methodologySections
+  : isDownloadsPage ? downloadsSections
+  : [];
+
+// Page links with active state
+const pages = [
+  { href: '/', label: 'Home', labelUrdu: 'ہوم', icon: '🏠', active: isHomePage },
+  { href: '/compare', label: 'Compare', labelUrdu: 'موازنہ', icon: '⚖️', active: isComparePage },
+  { href: '/downloads', label: 'Downloads', labelUrdu: 'ڈاؤن لوڈز', icon: '📥', active: isDownloadsPage },
+  { href: '/embed', label: 'Embed', labelUrdu: 'ایمبیڈ', icon: '🔗', active: isEmbedPage },
+  { href: '/methodology', label: 'Methodology', labelUrdu: 'طریقہ کار', icon: '📋', active: isMethodologyPage },
+];
+---
+
+<!-- Left: Section Navigation (shown on all pages with sections) -->
+{sections.length > 0 && (
+  <div class="fixed left-4 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col h-[60vh]" id="section-nav">
+    <div class="bg-gradient-to-b from-dark-800/98 to-dark-900/98 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl h-full flex flex-col">
+      <p class="text-xs uppercase tracking-widest text-debt-red font-bold px-3 mb-4 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-debt-red animate-pulse"></span>
+        {lang === 'ur' ? 'سیکشنز' : 'Sections'}
+      </p>
+      <div class="flex flex-col flex-1 gap-2">
+        {sections.map((section) => (
+          <a
+            href={`#${section.id}`}
+            class="section-link flex items-center gap-4 px-4 py-4 text-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-white/10 hover:to-transparent rounded-xl transition-all flex-1 group"
+            data-section={section.id}
+          >
+            <span class="text-3xl group-hover:scale-110 transition-transform">{section.icon}</span>
+            <span class="font-semibold text-sm">{lang === 'ur' ? section.labelUrdu : section.label}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+)}
+
+<!-- Right: Page Navigation -->
+<div class="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col h-[60vh]" id="page-nav">
+  <div class="bg-gradient-to-b from-dark-800/98 to-dark-900/98 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl h-full flex flex-col">
+    <p class="text-xs uppercase tracking-widest text-debt-red font-bold px-3 mb-4 flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-debt-red animate-pulse"></span>
+      {lang === 'ur' ? 'صفحات' : 'Pages'}
+    </p>
+    <div class="flex flex-col flex-1 gap-2">
+      {pages.map((page) => (
+        <a
+          href={`${page.href}${lang === 'ur' ? '?lang=ur' : ''}`}
+          class:list={[
+            'page-link flex items-center gap-4 px-4 py-4 rounded-xl transition-all flex-1 group',
+            page.active
+              ? 'text-white bg-gradient-to-r from-debt-red/30 to-debt-red/10 border-l-4 border-debt-red shadow-lg shadow-debt-red/20'
+              : 'text-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-white/10 hover:to-transparent border-l-4 border-transparent'
+          ]}
+        >
+          <span class="text-3xl group-hover:scale-110 transition-transform">{page.icon}</span>
+          <span class="font-semibold text-sm">{lang === 'ur' ? page.labelUrdu : page.label}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .section-link.active {
+    @apply text-white bg-gradient-to-r from-debt-red/30 to-debt-red/10 border-l-4 border-debt-red shadow-lg shadow-debt-red/20;
+  }
+
+  .section-link {
+    @apply border-l-4 border-transparent;
+  }
+
+  .section-link.active span:first-child {
+    @apply scale-110;
+  }
+
+  .page-link[aria-current="page"] {
+    @apply text-white bg-gradient-to-r from-debt-red/30 to-debt-red/10 border-l-4 border-debt-red shadow-lg shadow-debt-red/20;
+  }
+
+  /* Glow effect on hover */
+  .section-link:hover, .page-link:hover {
+    box-shadow: 0 0 20px rgba(163, 45, 45, 0.1);
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const sectionLinks = document.querySelectorAll('.section-link');
+    const sections = document.querySelectorAll('section[id], div[id]');
+
+    // Highlight current section on scroll
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            sectionLinks.forEach((link) => {
+              if (link.getAttribute('data-section') === id) {
+                link.classList.add('active');
+              } else {
+                link.classList.remove('active');
+              }
+            });
+          }
+        });
+      },
+      { threshold: 0.3, rootMargin: '-100px 0px -50% 0px' }
+    );
+
+    sections.forEach((section) => {
+      if (section.id) observer.observe(section);
+    });
+
+    // Smooth scroll on click
+    sectionLinks.forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href')?.slice(1);
+        const target = document.getElementById(targetId || '');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Mark current page
+    const currentPath = window.location.pathname;
+    document.querySelectorAll('.page-link').forEach((link) => {
+      const href = link.getAttribute('href')?.split('?')[0];
+      if (href === currentPath || (currentPath === '/' && href === '/')) {
+        link.setAttribute('aria-current', 'page');
+      }
+    });
+  });
+</script>

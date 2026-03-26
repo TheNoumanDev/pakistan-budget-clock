@@ -1,0 +1,142 @@
+---
+interface Props {
+  lang?: 'en' | 'ur';
+}
+
+const { lang = 'en' } = Astro.props;
+
+import en from '../i18n/en.json';
+import ur from '../i18n/ur.json';
+
+const t = lang === 'ur' ? ur : en;
+---
+
+<section class="py-16 md:py-24 border-t border-white/5">
+  <div class="section-container">
+    <h2 class="text-sm uppercase tracking-[0.2em] text-gray-500 text-center mb-2">
+      {t.historical.title}
+    </h2>
+    <p class="text-gray-600 text-center text-sm mb-10">
+      {t.historical.subtitle}
+    </p>
+
+    <div class="max-w-4xl mx-auto">
+      <canvas id="historical-chart" height="350"></canvas>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    if (typeof Chart === 'undefined') {
+      console.error('Chart.js not loaded');
+      return;
+    }
+
+    const ctx = document.getElementById('historical-chart');
+    if (!ctx) return;
+
+    // Fetch budget data
+    const response = await fetch('/data/budget.json');
+    const budgetData = await response.json();
+
+    const historicalData = budgetData.historicalData;
+
+    // Convert to trillions for readability
+    const toTrillion = (v) => v / 1_000_000_000_000;
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: historicalData.map((d) => d.fiscalYear),
+        datasets: [
+          {
+            label: 'Debt Servicing',
+            data: historicalData.map((d) => toTrillion(d.debtInterest)),
+            borderColor: '#ef4444',
+            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+            fill: true,
+            tension: 0.3,
+            borderWidth: 3,
+          },
+          {
+            label: 'Defence',
+            data: historicalData.map((d) => toTrillion(d.defence)),
+            borderColor: '#94a3b8',
+            backgroundColor: 'rgba(148, 163, 184, 0.1)',
+            fill: true,
+            tension: 0.3,
+            borderWidth: 2,
+          },
+          {
+            label: 'Education',
+            data: historicalData.map((d) => toTrillion(d.education)),
+            borderColor: '#22c55e',
+            backgroundColor: 'rgba(34, 197, 94, 0.1)',
+            fill: true,
+            tension: 0.3,
+            borderWidth: 2,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: {
+          intersect: false,
+          mode: 'index'
+        },
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              color: '#9ca3af',
+              usePointStyle: true,
+              padding: 20
+            }
+          },
+          tooltip: {
+            backgroundColor: '#1a1a1d',
+            titleColor: '#fff',
+            bodyColor: '#9ca3af',
+            borderColor: 'rgba(255,255,255,0.1)',
+            borderWidth: 1,
+            callbacks: {
+              label: function(context) {
+                return `${context.dataset.label}: Rs ${context.parsed.y.toFixed(2)} trillion`;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              color: '#6b7280',
+              callback: function(value) {
+                return 'Rs ' + value + 'T';
+              }
+            },
+            grid: {
+              color: 'rgba(255,255,255,0.05)'
+            }
+          },
+          x: {
+            ticks: {
+              color: '#6b7280'
+            },
+            grid: {
+              display: false
+            }
+          }
+        }
+      }
+    });
+  });
+</script>
+
+<style>
+  #historical-chart {
+    max-height: 350px;
+  }
+</style>

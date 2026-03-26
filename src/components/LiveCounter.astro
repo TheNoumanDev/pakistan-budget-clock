@@ -1,0 +1,131 @@
+---
+interface Props {
+  id: string;
+  annualPKR: number;
+  label: string;
+  labelUrdu?: string;
+  percentOfBudget: number;
+  variant?: 'debt' | 'defence' | 'education' | 'health';
+  size?: 'hero' | 'large' | 'medium' | 'small';
+  lang?: 'en' | 'ur';
+}
+
+const {
+  id,
+  annualPKR,
+  label,
+  labelUrdu,
+  percentOfBudget,
+  variant = 'debt',
+  size = 'medium',
+  lang = 'en'
+} = Astro.props;
+
+import en from '../i18n/en.json';
+import ur from '../i18n/ur.json';
+
+const t = lang === 'ur' ? ur : en;
+const displayLabel = lang === 'ur' && labelUrdu ? labelUrdu : label;
+
+// Calculate per-second rate for display
+const perSecond = Math.round(annualPKR / (365 * 24 * 60 * 60));
+
+// Size variants
+const sizeConfig = {
+  hero: {
+    number: 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl',
+    label: 'text-xs sm:text-sm',
+    rate: 'text-sm sm:text-base',
+  },
+  large: {
+    number: 'text-3xl sm:text-4xl md:text-5xl',
+    label: 'text-xs',
+    rate: 'text-sm',
+  },
+  medium: {
+    number: 'text-lg sm:text-xl md:text-2xl lg:text-3xl',
+    label: 'text-xs sm:text-sm',
+    rate: 'text-sm',
+  },
+  small: {
+    number: 'text-lg sm:text-xl md:text-2xl',
+    label: 'text-xs',
+    rate: 'text-xs',
+  },
+};
+
+// Color variants
+const colorConfig = {
+  debt: {
+    text: 'text-debt-red',
+    glow: 'glow-red',
+    label: 'text-red-400/80',
+    bar: 'bg-debt-red',
+  },
+  defence: {
+    text: 'text-slate-300',
+    glow: 'glow-slate',
+    label: 'text-slate-500',
+    bar: 'bg-slate-400',
+  },
+  education: {
+    text: 'text-education-green',
+    glow: 'glow-green',
+    label: 'text-green-400/80',
+    bar: 'bg-education-green',
+  },
+  health: {
+    text: 'text-health-teal',
+    glow: 'glow-teal',
+    label: 'text-teal-400/80',
+    bar: 'bg-health-teal',
+  },
+};
+
+const sizeClass = sizeConfig[size];
+const colorClass = colorConfig[variant];
+---
+
+<div
+  class="text-center"
+  data-counter-card
+  data-annual-pkr={annualPKR}
+  data-counter-id={id}
+>
+  <!-- Label - small, uppercase -->
+  <p class={`uppercase tracking-[0.15em] font-medium mb-2 ${sizeClass.label} ${colorClass.label}`}>
+    {displayLabel}
+  </p>
+
+  <!-- Counter Value - THE STAR -->
+  <div
+    class={`font-mono font-bold counter-value leading-none ${sizeClass.number} ${colorClass.text} ${colorClass.glow}`}
+    id={`counter-${id}`}
+    data-counter
+  >
+    0
+  </div>
+
+  <!-- Rate pill -->
+  <div class={`mt-3 ${sizeClass.rate}`}>
+    <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/5 rounded-full text-gray-500 font-mono">
+      <span class="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span>
+      Rs {perSecond.toLocaleString('en-PK')}/sec
+    </span>
+  </div>
+
+  <!-- Percentage bar (only for hero size) -->
+  {size === 'hero' && (
+    <div class="mt-6 max-w-md mx-auto">
+      <div class="flex justify-between text-xs text-gray-600 mb-1.5 uppercase tracking-wider">
+        <span>{percentOfBudget}% of federal budget</span>
+      </div>
+      <div class="w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
+        <div
+          class={`h-full rounded-full ${colorClass.bar}`}
+          style={`width: ${Math.min(percentOfBudget, 100)}%;`}
+        />
+      </div>
+    </div>
+  )}
+</div>

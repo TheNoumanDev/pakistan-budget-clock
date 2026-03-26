@@ -1,0 +1,21 @@
+---
+interface Props {
+  lang?: 'en' | 'ur';
+}
+
+const { lang = 'en' } = Astro.props;
+
+import en from '../i18n/en.json';
+import ur from '../i18n/ur.json';
+
+const t = lang === 'ur' ? ur : en;
+---
+
+<section class="pt-6 pb-2">
+  <div class="section-container text-center">
+    <!-- Tiny eyebrow -->
+    <p class="text-xs uppercase tracking-[0.2em] text-gray-600 font-medium">
+      {t.hero.eyebrow}
+    </p>
+  </div>
+</section>
