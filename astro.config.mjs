@@ -4,5 +4,5 @@ import tailwind from '@astrojs/tailwind';
 export default defineConfig({
   output: 'static',
   integrations: [tailwind()],
-  site: 'https://pakistanbudgetclock.com',
+  site: 'https://pakistan-budget-clock.pages.dev',
 });
